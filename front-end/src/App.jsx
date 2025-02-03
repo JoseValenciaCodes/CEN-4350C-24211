@@ -4,6 +4,11 @@ import Navbar from './components/NavBar/Navbar';
 import Footer from './components/Footer/Footer';
 import Home from './routes/Home/Home';
 import About from "./routes/About/About";
+import Register from "./routes/Register/Register";
+import Login from "./routes/Login/Login";
+import ForgotPassword from "./routes/ForgotPassword/ForgotPassword";
+import ResetPassword from "./routes/ResetPassword/ResetPassword";
+
 import './App.css'
 
 function App() {
@@ -14,6 +19,10 @@ function App() {
       <Routes>
         <Route path="/" index element={<Home />}/>
         <Route path="/about" element={<About />}/>
+        <Route path="/register" element={<Register />}/>
+        <Route path="/login" element={<Login />}/>
+        <Route path="/forgot-password" element={<ForgotPassword />}/>
+        <Route path="/reset-password" element={<ResetPassword />}/>
       </Routes>
       <Footer />
     </>
