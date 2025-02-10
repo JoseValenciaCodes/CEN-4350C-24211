@@ -8,6 +8,8 @@ import Register from "./routes/Register/Register";
 import Login from "./routes/Login/Login";
 import ForgotPassword from "./routes/ForgotPassword/ForgotPassword";
 import ResetPassword from "./routes/ResetPassword/ResetPassword";
+import Membership from "./routes/Membership/Membership";
+import CourseDetails from "./routes/CourseDetails/CourseDetails";
 
 import './App.css'
 
@@ -23,6 +25,8 @@ function App() {
         <Route path="/login" element={<Login />}/>
         <Route path="/forgot-password" element={<ForgotPassword />}/>
         <Route path="/reset-password" element={<ResetPassword />}/>
+        <Route path="/memberships" element={<Membership />}/>
+        <Route path="/course-details" element={<CourseDetails />}/>
       </Routes>
       <Footer />
     </>
