@@ -10,6 +10,8 @@ import ForgotPassword from "./routes/ForgotPassword/ForgotPassword";
 import ResetPassword from "./routes/ResetPassword/ResetPassword";
 import Membership from "./routes/Membership/Membership";
 import CourseDetails from "./routes/CourseDetails/CourseDetails";
+import Dashboard from "./routes/Dashboard/Dashboard";
+import MyLearning from "./routes/Dashboard/MyLearning/MyLearning";
 
 import './App.css'
 
@@ -27,6 +29,9 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />}/>
         <Route path="/memberships" element={<Membership />}/>
         <Route path="/course-details" element={<CourseDetails />}/>
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="mylearning" element={<MyLearning />}/>
+        </Route>
       </Routes>
       <Footer />
     </>
