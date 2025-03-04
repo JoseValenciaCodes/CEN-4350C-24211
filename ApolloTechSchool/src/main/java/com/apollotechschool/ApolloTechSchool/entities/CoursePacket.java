@@ -10,10 +10,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(
         name = "course_packets",
@@ -46,4 +42,60 @@ public class CoursePacket
     @OneToMany(mappedBy = "coursePacket")
     private List<CoursePacketEnrolled> coursePacketEnrolledList;
 
+    public CoursePacket() {}
+
+    public CoursePacket(Long id, String title, String description, String picUrl) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.picUrl = picUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public List<CoursePacketEnrolled> getCoursePacketEnrolledList() {
+        return coursePacketEnrolledList;
+    }
+
+    public void setCoursePacketEnrolledList(List<CoursePacketEnrolled> coursePacketEnrolledList) {
+        this.coursePacketEnrolledList = coursePacketEnrolledList;
+    }
 }

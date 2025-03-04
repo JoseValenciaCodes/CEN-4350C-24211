@@ -5,15 +5,8 @@ package com.apollotechschool.ApolloTechSchool.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+
 @Entity
 @Table(name = "course_skills")
 public class CourseSkill
@@ -31,4 +24,35 @@ public class CourseSkill
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
+
+    public CourseSkill() {}
+
+    public CourseSkill(Long id, String skill) {
+        this.id = id;
+        this.skill = skill;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSkill() {
+        return skill;
+    }
+
+    public void setSkill(String skill) {
+        this.skill = skill;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 }

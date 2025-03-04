@@ -11,10 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(
         name = "course_packet_enrolled",
@@ -35,4 +31,34 @@ public class CoursePacketEnrolled
     @ManyToOne
     @JoinColumn(name = "course_packet_id", nullable = false, unique = true)
     private CoursePacket coursePacket;
+
+    public CoursePacketEnrolled() {}
+
+    public CoursePacketEnrolled(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public CoursePacket getCoursePacket() {
+        return coursePacket;
+    }
+
+    public void setCoursePacket(CoursePacket coursePacket) {
+        this.coursePacket = coursePacket;
+    }
 }

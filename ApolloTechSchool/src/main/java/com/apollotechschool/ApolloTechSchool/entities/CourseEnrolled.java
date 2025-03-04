@@ -10,10 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(
         name = "course_enrolled",
@@ -34,4 +30,11 @@ public class CourseEnrolled
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false, unique = true)
     private Course course;
+
+    public CourseEnrolled() {}
+
+    public CourseEnrolled(Long id, User user) {
+        this.id = id;
+        this.user = user;
+    }
 }

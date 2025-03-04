@@ -7,28 +7,24 @@ package com.apollotechschool.ApolloTechSchool.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "course_modules")
 public class CourseModule
 {
     /* Course Modules Attributes */
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
     @NotBlank(message = "Module title cannot be blank")
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Getter
     @NotBlank(message = "Module description cannot be blank")
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
@@ -37,4 +33,24 @@ public class CourseModule
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
+
+    public CourseModule() {}
+
+    public CourseModule(Long id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

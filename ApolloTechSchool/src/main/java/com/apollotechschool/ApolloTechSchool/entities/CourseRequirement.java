@@ -2,10 +2,6 @@ package com.apollotechschool.ApolloTechSchool.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /*
 * Course Requirements Entity
@@ -14,10 +10,6 @@ import lombok.Setter;
 *
 * */
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "course_requirements")
 public class CourseRequirement
@@ -35,4 +27,35 @@ public class CourseRequirement
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
+
+    public CourseRequirement() {}
+
+    public CourseRequirement(Long id, String requirement) {
+        this.id = id;
+        this.requirement = requirement;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 }

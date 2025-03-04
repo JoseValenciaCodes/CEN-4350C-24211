@@ -1,19 +1,11 @@
 package com.apollotechschool.ApolloTechSchool.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /* Learning Path Enrolled Entity
 * Represents learning paths the user is enrolled to
 * */
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(
         name = "learning_path_enrolled",
@@ -34,4 +26,34 @@ public class LearningPathEnrolled
     @ManyToOne
     @JoinColumn(name = "learning_path_id", nullable = false, unique = true)
     private LearningPath learningPath;
+
+    public LearningPathEnrolled() {}
+
+    public LearningPathEnrolled(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public LearningPath getLearningPath() {
+        return learningPath;
+    }
+
+    public void setLearningPath(LearningPath learningPath) {
+        this.learningPath = learningPath;
+    }
 }
