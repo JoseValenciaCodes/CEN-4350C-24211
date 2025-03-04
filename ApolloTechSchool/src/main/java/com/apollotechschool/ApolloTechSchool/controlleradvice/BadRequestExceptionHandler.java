@@ -1,6 +1,8 @@
 package com.apollotechschool.ApolloTechSchool.controlleradvice;
 
+import com.apollotechschool.ApolloTechSchool.exceptions.EntityAlreadyExistsException;
 import com.apollotechschool.ApolloTechSchool.exceptions.EntityNotFoundException;
+import com.apollotechschool.ApolloTechSchool.exceptions.IncorrectCredentialsException;
 import com.apollotechschool.ApolloTechSchool.payloads.ErrorPayload;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,21 @@ public class BadRequestExceptionHandler
 {
     // Throw Exception when trying to find an entity that could not be found
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorPayload> handleUserAlreadyRegisteredExceptions(EntityNotFoundException ex)
+    public ResponseEntity<ErrorPayload> handleEntityNotFoundExceptions(EntityNotFoundException ex)
+    {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorPayload(ex.getMessage()));
+    }
+
+    // Throw Exception when trying to add a duplicate
+    @ExceptionHandler(EntityAlreadyExistsException.class)
+    public ResponseEntity<ErrorPayload> handleEntityAlreadyExistsExceptions(EntityAlreadyExistsException ex)
+    {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorPayload(ex.getMessage()));
+    }
+
+    // Throw Exception when trying to enter incorrect credentials
+    @ExceptionHandler(IncorrectCredentialsException.class)
+    public ResponseEntity<ErrorPayload> handleIncorrectCredentialsException(IncorrectCredentialsException ex)
     {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorPayload(ex.getMessage()));
     }
