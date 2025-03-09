@@ -48,6 +48,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
             // Check token is valid
             if (StringUtils.hasText(token) && jwtUtil.validateToken(token))
             {
+                if (blacklistedTokenRepository.existsByToken(token))
+                {
+                    throw new EcommerceApiException(HttpStatus.UNAUTHORIZED, "Token is already blacklisted");
+                }
+
+
                 String email = jwtUtil.getEmail(token);
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
