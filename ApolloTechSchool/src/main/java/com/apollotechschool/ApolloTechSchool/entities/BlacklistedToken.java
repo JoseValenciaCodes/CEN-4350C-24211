@@ -4,6 +4,7 @@ package com.apollotechschool.ApolloTechSchool.entities;
 * JWT Tokens that are no longer accepted because the user chose to logout */
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.Date;
 
@@ -15,9 +16,11 @@ public class BlacklistedToken
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
     @Column(nullable = false, unique = true)
     private String token;
 
+    @Getter
     @Column(nullable = false)
     private Date expiryDate;
 
@@ -25,6 +28,30 @@ public class BlacklistedToken
 
     public BlacklistedToken(String token, Date expiryDate) {
         this.token = token;
+        this.expiryDate = expiryDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
     }
 

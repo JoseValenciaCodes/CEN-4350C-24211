@@ -5,7 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /* User Entity Class
 * Represents a user stored in the DB
@@ -66,6 +68,14 @@ public class User
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LearningPathEnrolled> learningPathEnrolledList;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private Set<Role> roles = new HashSet<Role>();
 
     public User() {}
 
@@ -173,5 +183,13 @@ public class User
 
     public void setLearningPathEnrolledList(List<LearningPathEnrolled> learningPathEnrolledList) {
         this.learningPathEnrolledList = learningPathEnrolledList;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
