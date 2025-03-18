@@ -42,6 +42,22 @@ public class CourseModule
         this.description = description;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -52,5 +68,9 @@ public class CourseModule
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Course getCourse() {
+        return course;
     }
 }

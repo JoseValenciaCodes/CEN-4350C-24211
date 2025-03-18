@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -59,6 +60,16 @@ public class BadRequestExceptionHandler extends ResponseEntityExceptionHandler
                 ex.getMessage(),
                 webRequest.getDescription(false)
                 ));
+    }
+
+    // Throw Exception for BadCredentialsException
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorPayload> handleBadCredentialsException(BadCredentialsException ex, WebRequest webRequest)
+    {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorPayload(
+                ex.getMessage(),
+                webRequest.getDescription(false)
+        ));
     }
 
     // Throw for invalid JWT tokens

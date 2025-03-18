@@ -1,4 +1,5 @@
 package com.apollotechschool.ApolloTechSchool.controllers;
 
-public class UserController {
+public class UserController
+{
 }

@@ -43,7 +43,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
         try
         {
             String token = getTokenFromRequest(request);
-            System.out.println("Token extracted from request: " + token);
 
             // Check token is valid
             if (StringUtils.hasText(token) && jwtUtil.validateToken(token))
