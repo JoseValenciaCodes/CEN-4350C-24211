@@ -82,11 +82,5 @@
                 <li>MS SQL Server</li>
             </ul>
         </li>
-        <li>
-            <b>Deployment Platform</b>
-            <ul>
-                <li>To be determined...</li>
-            </ul>
-        </li>
     </ul>
 </div>
