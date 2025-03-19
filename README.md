@@ -1,4 +1,4 @@
-﻿# E-Learning Web Platform
+﻿# Apollo Tech School
 <div align="center">
     <img src="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737427677/logo_w1xqmb.png" alt="ApolloTechSchool Icon" width="500">
 </div>
