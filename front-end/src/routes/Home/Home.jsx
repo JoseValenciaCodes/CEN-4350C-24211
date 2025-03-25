@@ -1,8 +1,86 @@
+// Use Hooks
+import { useState, useEffect} from "react";
+
 import HomeHero from "../../components/HomeHero/HomeHero";
 import HomeCardContainer from "../../components/HomeCardContainer/HomeCardContainer";
 import CardOverview from "../../components/CardOverview/CardOverview";
 
+// Import Base Client
+import baseClient from "../../api/baseClient";
+
 function Home() {
+  
+  // Load Courses
+  const [courses, setCourses] = useState([]);
+  const [courseLoading, setCourseLoading] = useState(true);
+  const [courseError, setCourseError] = useState(null);
+
+  // Load Course Packets
+  const [coursePackets, setCoursePackets] = useState([]);
+  const [coursePacketLoading, setCoursePacketLoading] = useState(true);
+  const [coursePacketError, setCoursePacketError] = useState(null);
+
+  // Load Learning Paths
+  const [learningPaths, setLearningPaths] = useState([]);
+  const [learningPathsLoading, setLearningPathsLoading] = useState(true);
+  const [learningPathsError, setLearningPathsError] = useState(null);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+        try
+        {
+            const res = await baseClient.get("/courses");
+            setCourses(res.data);
+        }
+        catch (err)
+        {
+            setCourseError(err.error);
+        }
+        finally
+        {
+            setCourseLoading(false);
+        }
+    };
+
+    const fetchCoursePackets = async () => {
+        try
+        {
+            const res = await baseClient.get("/course-packets");
+            setCoursePackets(res.data);
+        }
+        catch (err)
+        {
+            setCoursePacketError(err.error);
+        }
+        finally
+        {
+            setCoursePacketLoading(false);
+        }
+    };
+
+    const fetchLearningPaths = async () => {
+        try
+        {
+            const res = await baseClient.get("/learning-paths");
+            setLearningPaths(res.data);
+        }
+
+        catch (err)
+        {
+            setLearningPathsError(err.error);
+        }
+
+        finally
+        {
+            setLearningPathsLoading(false);
+        }
+    };
+
+    fetchCourses();
+    fetchCoursePackets();
+    fetchLearningPaths();
+  }, []);
+
   return (
     <div className="home-page">
         <HomeHero 
@@ -22,46 +100,24 @@ function Home() {
             containerTtile="Popular Courses"
             containerTitleColorClass="text-gray-300"
             >
-                <CardOverview
-                    cardTypeClass="course-card"
-                    bgColorClass="bg-gray-800"
-                    imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323744/Apollo-Tech-School/Java-For-Beginners.webp"
-                    imgAlt="Java For Beginners Course"
-                    cardTitle="Java For Beginners"
-                    cardDescription="Learn the basics of the Java programming language, its syntax, data types, and object-oriented concepts as the cornerstone to build applications."
-                    detailsLink="/course/1"
-                    courseLevel="beginner"
-                />
-                <CardOverview
-                    cardTypeClass="course-card"
-                    bgColorClass="bg-gray-800"
-                    imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323766/Apollo-Tech-School/Pandas-And-Matplotlib.jpg"
-                    imgAlt="Pandas And Matplotlib Course"
-                    cardTitle="Pandas And Matplotlib"
-                    cardDescription="Learn how to manipulate data and process it with Pandas.Then, learn how to visualize it to extract insights with Matplotlib."
-                    detailsLink="/course/2"
-                    courseLevel="intermediate"
-                />
-                <CardOverview
-                    cardTypeClass="course-card"
-                    bgColorClass="bg-gray-800"
-                    imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323972/Apollo-Tech-School/OWASP.png"
-                    imgAlt="OWASP Web App Vulnerabilities Course"
-                    cardTitle="OWASP Web App Vulnerabilities"
-                    cardDescription="Websites could have vulnerabilities that are easily exploited by cybercriminals. Learn how websites are vulnerable to protect yours."
-                    detailsLink="/course/3"
-                    courseLevel="intermediate"
-                />
-                <CardOverview
-                    cardTypeClass="course-card"
-                    bgColorClass="bg-gray-800"
-                    imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323474/Apollo-Tech-School/lkhbeik8fnnocmxkastb.webp"
-                    imgAlt="Docker Containerization and Deployment Course"
-                    cardTitle="Docker Containerization and Deployment Course"
-                    cardDescription="Get to know what Docker is, what it is used for and get hands-on practice by using it to deploy a real-world software project."
-                    detailsLink="/course/4"
-                    courseLevel="advanced"
-                />
+                {
+                    (courseLoading) ? <p>Loading Courses ...</p>
+                    :((courseError) ? <p>Error: {courseError}</p>: (
+                        courses.map(course => (
+                            <CardOverview
+                                cardTypeClass="course-card"
+                                bgColorClass="bg-gray-800"
+                                imgSource={course.picUrl}
+                                imgAlt={course.description}
+                                cardTitle={course.title}
+                                cardDescription={course.description}
+                                detailsLink={`/course/${course.id}`}
+                                courseLevel={course.level.toLowerCase()}
+                                key={course.id}
+                            />
+                        ))
+                    ))
+                }
         </HomeCardContainer>
 
         {/** Course Packets Card Container */}
@@ -71,42 +127,26 @@ function Home() {
             containerTtile="Popular Course Packets"
             containerTitleColorClass="text-gray-200"
         >
-            <CardOverview
-                cardTypeClass="packet-card"
-                bgColorClass="bg-gray-700"
-                imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737326088/Apollo-Tech-School/Java-Android.png"
-                imgAlt="The Java Mobile Development Course Packet"
-                cardTitle="The Java Mobile Development Course Packet"
-                cardDescription="Learn how to use the Java Programming Language to build full-stack mobile Android applications."
-                detailsLink="/packet/1"
-            />
-            <CardOverview
-                cardTypeClass="packet-card"
-                bgColorClass="bg-gray-700"
-                imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737326112/Apollo-Tech-School/SQL-Management.png"
-                imgAlt="The Database Management and SQL Course Packet"
-                cardTitle="The Database Management and SQL Course Packet"
-                cardDescription="Learn how to design, query, and maintain databases using SQL relational databases, and learn best practices in data management."
-                detailsLink="/packet/2"
-            />
-            <CardOverview
-                cardTypeClass="packet-card"
-                bgColorClass="bg-gray-700"
-                imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737326183/Apollo-Tech-School/UI-UX.png"
-                imgAlt="The UI/UX for Developers Course Packet"
-                cardTitle="The UI/UX for Developers Course Packet"
-                cardDescription="Learn how designers think by improving your skills in user interface UI and user experience UX design."
-                detailsLink="/packet/3"
-            />
-            <CardOverview
-                cardTypeClass="packet-card"
-                bgColorClass="bg-gray-700"
-                imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323438/Apollo-Tech-School/AI.jpg"
-                imgAlt="The Machine Learning and AI Course Packet"
-                cardTitle="The Machine Learning and AI Course Packet"
-                cardDescription="Learn how to use machine learning and artificial intelligence by covering algorithms, models, and applications to create AI smart applications."
-                detailsLink="/packet/4"
-            />
+            {
+                (coursePacketLoading) ? <p>Loading Course Packets ...</p>
+                :((coursePacketError) ? <p>Error: {coursePacketError}</p>:
+                    (
+                        coursePackets.map(coursePacket => (
+                                <CardOverview
+                                    cardTypeClass="packet-card"
+                                    bgColorClass="bg-gray-700"
+                                    imgSource={coursePacket.picUrl}
+                                    imgAlt={coursePacket.description}
+                                    cardTitle={coursePacket.title}
+                                    cardDescription={coursePacket.description}
+                                    detailsLink={`/packet/${coursePacket.id}`}
+                                    key={coursePacket.id}
+                                />
+                        ))
+                    )
+
+                )
+            }
         </HomeCardContainer>
 
         {/** Learning Paths Card Container */}
@@ -116,42 +156,24 @@ function Home() {
             containerTtile="Popular Learning Paths"
             containerTitleColorClass="text-gray-100"
         >
-            <CardOverview
-                cardTypeClass="path-card"
-                bgColorClass="bg-blue-800"
-                imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323564/Apollo-Tech-School/Full-Stack-Developer.webp"
-                imgAlt="Full-Stack Web Development Learning Path"
-                cardTitle="Full-Stack Web Development Learning Path"
-                cardDescription="Become a professional building the front-end and back-end sides of web applications."
-                detailsLink="/path/1"
-            />
-            <CardOverview
-                cardTypeClass="path-card"
-                bgColorClass="bg-blue-800"
-                imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323474/Apollo-Tech-School/miwmpjvez8jgwvl2mpvg.avif"
-                imgAlt="Cybersecurity and Ethical Hacking Learning Path"
-                cardTitle="Cybersecurity and Ethical Hacking Learning Path"
-                cardDescription="Go zero to hero from the fundamentals of cybersecurity to full-on pentesting digital systems."
-                detailsLink="/path/2"
-            />
-            <CardOverview
-                cardTypeClass="path-card"
-                bgColorClass="bg-blue-800"
-                imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737327747/Apollo-Tech-School/Software-Testing.jpg"
-                imgAlt="Software Testing and Quality Assurance Learning Path"
-                cardTitle="Software Testing and Quality Assurance Learning Path"
-                cardDescription="Become a job-ready software tester by diving into the several sorts of software testing techniques."
-                detailsLink="/path/3"
-            />
-            <CardOverview
-                cardTypeClass="path-card"
-                bgColorClass="bg-blue-800"
-                imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737327832/Apollo-Tech-School/Network-Engineer.jpg"
-                imgAlt="Network Engineer Learning Path"
-                cardTitle="Network Engineer Learning Path"
-                cardDescription="Become a professional network enginner in order to design, implement, and maintain reliable and secure computer networks."
-                detailsLink="/path/4"
-            />
+            {
+                (learningPathsLoading) ? <p>Loading Learning Paths ...</p>
+                : ((learningPathsError) ? <p>Error: {learningPathsError}</p>:
+                    (
+                        learningPaths.map(learningPath => (
+                                <CardOverview
+                                    cardTypeClass="path-card"
+                                    bgColorClass="bg-blue-800"
+                                    imgSource={learningPath.picUrl}
+                                    imgAlt={learningPath.description}
+                                    cardTitle={learningPath.title}
+                                    cardDescription={learningPath.description}
+                                    detailsLink={`/path/${learningPath.id}`}
+                                    key={learningPath.id}
+                                />
+                        ))
+                    ))
+            }
         </HomeCardContainer>
         <HomeHero
             heroTypeClass="membership"

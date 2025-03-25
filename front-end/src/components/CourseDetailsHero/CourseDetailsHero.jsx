@@ -8,12 +8,15 @@ function CourseDetailsHero({ courseName, courseRating, courseNumReviews, imgSour
     return (
         <div className="text-center mb-8">
             <h1 className="text-4xl font-semibold text-white">{courseName}</h1>
-            <p className="text-lg text-gray-400 mt-2">
-                <span className="text-yellow-400">{courseRating}</span>
-                <span className="mr-2 ml-2">| {courseNumReviews} reviews</span>
-            </p>
+            {
+                /*<p className="text-lg text-gray-400 mt-2">
+                    <span className="text-yellow-400">{courseRating}</span>
+                    <span className="mr-2 ml-2">| {courseNumReviews} reviews</span>
+                </p>
+                */       
+            }
             <div className="mt-6">
-                <img src={imgSource} alt={imgAlt} className="mx-auto rounded-lg shadow-lg"/>
+                <img src={imgSource} alt={imgAlt} width={500} className="mx-auto rounded-lg shadow-lg"/>
             </div>
             <div className="text-5xl font-bold text-white mt-6">
                 ${coursePrice}

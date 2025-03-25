@@ -28,6 +28,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />}/>
         <Route path="/reset-password" element={<ResetPassword />}/>
         <Route path="/memberships" element={<Membership />}/>
+        <Route path="/course/:courseId" element={<CourseDetails/>}/>
         <Route path="/course-details" element={<CourseDetails />}/>
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="mylearning" element={<MyLearning />}/>

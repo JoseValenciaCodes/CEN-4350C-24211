@@ -5,10 +5,15 @@
 function StudentReview({studentRating, imgSource, imgAlt, studentName, studentProfession, studentReview }) {
     return (
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex items-start">
-            <div className="flex flex-col items-center mr-4">
-                <span className="text-yellow-500 text-2xl font-bold">{studentRating}</span>
-                <span className="text-gray-400 text-sm">/ 5</span>
-            </div>
+            {
+                /**
+                 *             
+                 * <div className="flex flex-col items-center mr-4">
+                        <span className="text-yellow-500 text-2xl font-bold">{studentRating}</span>
+                        <span className="text-gray-400 text-sm">/ 5</span>
+                   </div>
+                 */
+            }
             <div>
                 <div className="flex items-center mb-4">
                     <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-700 overflow-hidden mr-4">
