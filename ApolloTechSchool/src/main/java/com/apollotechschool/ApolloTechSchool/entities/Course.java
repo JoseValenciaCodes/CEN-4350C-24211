@@ -35,6 +35,8 @@ public class Course
     @Pattern(regexp = "^(http|https)://.*", message = "Invalid URL Format")
     private String picUrl;
 
+    // Set Up Course Price
+
     @NotBlank(message = "Level cannot be empty")
     @Column(name = "level", nullable = false)
     private String level;
