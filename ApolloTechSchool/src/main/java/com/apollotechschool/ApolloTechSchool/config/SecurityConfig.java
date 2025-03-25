@@ -66,7 +66,7 @@ public class SecurityConfig
                                 .requestMatchers("/api/auth/login").permitAll()
                                 .requestMatchers("/api/auth/sign-in").permitAll()
                                 .requestMatchers("/api/auth/signin").permitAll()
-                                .requestMatchers("/api/memberships/*").permitAll()
+                                .requestMatchers("/api/memberships/**").permitAll()
                                 .requestMatchers("/api/learning-paths/**").permitAll()
                                 .requestMatchers("/api/categories/**").permitAll()
                                 .requestMatchers("/api/course-packets/**").permitAll()
