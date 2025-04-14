@@ -1,17 +1,40 @@
 /** Sidebar the authenticated user will see upon registration / loggin in  */
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faBook, faCog, faSignOutAlt, faBars } from "@fortawesome/free-solid-svg-icons";
+import { UserContext } from "../../context/UserContext";
+import baseClient from "../../api/baseClient";
 
 const Sidebar = () => {
 
   // Placeholders for dynamic data that will be fed later on
-  const name = "Jose Brache Garcia";
+
+  // Import user and the ability to change it
+  const { user, setUser } = useContext(UserContext);
+  const [error, setError] = useState(null);
 
   // Control if the sidebar should be opened or not
   const [isOpen, setIsOpen] = useState(true);
+
+  const name = `${user.firstName} ${user.lastName}`;
+
+  const logout = async () => {
+    // Prepare Logout Request
+    try
+    {
+      await baseClient.post("/auth/logout");
+      setUser({});
+    }
+
+    catch (err)
+    {
+      console.error("Logout failed");
+      setError(err.response?.data?.error || "An error occurred");
+    }
+
+  };
 
   return (
     <div className={`h-screen bg-slate-800 text-gray-300 transition-all duration-300 ${isOpen ? "w-64" : "w-16"}`}>
@@ -51,9 +74,10 @@ const Sidebar = () => {
           </li>
           <li>
             {/** Log out from the application */}
-            <Link to="logout" className="flex items-center p-3 hover:bg-red-600 rounded-lg">
+            <Link to="/" onClick={logout} className="flex items-center p-3 hover:bg-red-600 rounded-lg">
               <FontAwesomeIcon icon={faSignOutAlt} className="mr-2 text-white" />
               {isOpen && <span className="text-gray-300">Logout</span>}
+              {error && <p className="text-red-600 text-center mb-4">{error}</p>}
             </Link>
           </li>
         </ul>
