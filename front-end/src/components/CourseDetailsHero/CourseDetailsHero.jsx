@@ -21,7 +21,6 @@ function CourseDetailsHero({ courseName, courseRating, courseNumReviews, imgSour
             <div className="text-5xl font-bold text-white mt-6">
                 ${coursePrice}
             </div>
-            <Link to="/login" className="bg-blue-600 text-white py-3 px-8 rounded-lg mt-6 inline-block">Enroll Now</Link>
         </div>
     );
 }

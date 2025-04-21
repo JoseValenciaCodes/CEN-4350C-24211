@@ -12,6 +12,7 @@ import Membership from "./routes/Membership/Membership";
 import CourseDetails from "./routes/CourseDetails/CourseDetails";
 import Dashboard from "./routes/Dashboard/Dashboard";
 import MyLearning from "./routes/Dashboard/MyLearning/MyLearning";
+import ProfileSettings from "./routes/Dashboard/ProfileSettings/ProfileSettings";
 
 import './App.css'
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/course-details" element={<CourseDetails />}/>
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="mylearning" element={<MyLearning />}/>
+          <Route path="settings" element={<ProfileSettings />} />
         </Route>
       </Routes>
       <Footer />

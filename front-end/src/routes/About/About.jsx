@@ -14,7 +14,7 @@ function About()
             <AboutHero
                 title="Unleash your passion for the Information Technology Industry!"
                 subtitle="At Apollo Tech School, we know you&apos;re bored of the traditional classroom. So here you&apos;ll learn by solving practical problems right away."
-                linkHref="/courses"
+                linkHref="/"
                 linkText="Browse Our Content"
             />
             {/**Summary Cards */}

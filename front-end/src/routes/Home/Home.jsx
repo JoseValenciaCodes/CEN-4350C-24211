@@ -139,7 +139,7 @@ function Home() {
                                     imgAlt={coursePacket.description}
                                     cardTitle={coursePacket.title}
                                     cardDescription={coursePacket.description}
-                                    detailsLink={`/packet/${coursePacket.id}`}
+                                    detailsLink={"#"}
                                     key={coursePacket.id}
                                 />
                         ))
@@ -168,7 +168,7 @@ function Home() {
                                     imgAlt={learningPath.description}
                                     cardTitle={learningPath.title}
                                     cardDescription={learningPath.description}
-                                    detailsLink={`/path/${learningPath.id}`}
+                                    detailsLink={`#`}
                                     key={learningPath.id}
                                 />
                         ))

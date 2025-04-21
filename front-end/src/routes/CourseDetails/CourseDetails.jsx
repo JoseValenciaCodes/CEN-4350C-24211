@@ -10,15 +10,20 @@ import CourseRequirements from "../../components/CourseRequirements/CourseRequir
 import CourseRequirement from "../../components/CourseRequirement/CourseRequirement";
 import StudentReviews from "../../components/StudentsReview/StudentsReview";
 import StudentReview from "../../components/StudentReview/StudentReview";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 // Use Hooks
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 import baseClient from "../../api/baseClient";
 
 function CourseDetails() {
 
   const { courseId } = useParams();
+
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [isUserEnrolled, setIsUserEnrolled] = useState(false);
 
   const [course, setCourse] = useState(null);
   const [courseLoading, setCourseLoading] = useState(true);
@@ -39,6 +44,18 @@ function CourseDetails() {
   const [courseReviews, setCourseReviews] = useState(null);
   const [courseReviewsLoading, setCourseReviewsLoading] = useState(true);
   const [courseReviewsError, setCourseReviewsError] = useState(null);
+
+      // Run to enroll to course
+    const enrollToCourse = async () => {
+        await baseClient.post(`/courses/enroll?userId=${user.id}&courseId=${courseId}`);
+        navigate("/dashboard/mylearning");
+    };
+
+    // Run to un-enroll from course
+    const unenrollFromCourse = async () => {
+      await baseClient.delete(`/courses/un-enroll?userId=${user.id}&courseId=${courseId}`);
+      navigate("/dashboard/mylearning");
+    };
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -121,11 +138,29 @@ function CourseDetails() {
       }
     };
 
+    // get if the user is enrolled in this course or not
+    const isUserEnrolledInThisCourse = async () => {
+      try
+      {
+        const res = await baseClient.get(`/courses/getEnrolledCourse?userId=${user.id}&courseId=${courseId}`);
+        if (res.data.id == courseId)
+        {
+          setIsUserEnrolled(true);
+        }
+      }
+
+      catch (err)
+      {
+        setIsUserEnrolled(false);
+      }
+    };
+
     fetchCourse();
     fetchCourseModules();
     fetchCourseSkills();
     fetchCourseRequirements();
     fetchCourseReviews();
+    isUserEnrolledInThisCourse();
   }, [courseId]);
 
   return (
@@ -215,7 +250,10 @@ function CourseDetails() {
         </StudentReviews>
 
         <div className="text-center">
-          <Link to="/login" className="bg-blue-600 text-white py-3 px-8 rounded-lg">Enroll Now</Link>
+          {
+            isUserEnrolled ? <button className="bg-red-600 text-white py-3 px-8 rounded-lg" onClick={unenrollFromCourse}>Un-Enroll Now</button>
+            : <button className="bg-blue-600 text-white py-3 px-8 rounded-lg" onClick={enrollToCourse}>Enroll Now</button>
+          }
         </div>
 
       </div>

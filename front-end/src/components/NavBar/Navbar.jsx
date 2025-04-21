@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDesktop, faSearch, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +10,14 @@ function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const onClickDropdownToggle = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+    const [userIconLink, setUserIconLink] = useState(null); // Determine if log in should be shown or not
+
+    // Make sure to block the user icon when the user is logged in
+    const { user } = useContext(UserContext);
+
+    useEffect(() => {
+        user.id !== undefined ? setUserIconLink("/dashboard/mylearning") : setUserIconLink("/login");
+    }, [user]);
 
     return (
         <nav className="bg-gray-900 text-white px-4 py-2 flex items-center justify-between">
@@ -29,9 +38,9 @@ function Navbar() {
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </div>
-        
+
             <div className="hidden md:flex">
-                <Link to="/login" className="hover:text-blue-400">
+                <Link to={userIconLink} className="hover:text-blue-400">
                     <FontAwesomeIcon icon={faUser} className="text-2xl"/>
                 </Link>
             </div>
@@ -46,7 +55,7 @@ function Navbar() {
                 <li><Link to="/about" className="hover:text-blue-400">About</Link></li>
                 <li><Link to="/memberships" className="hover:text-blue-400">Membership</Link></li>
                 <li>
-                <Link to="/login" className="hover:text-blue-400">
+                <Link to={userIconLink} className="hover:text-blue-400">
                     <FontAwesomeIcon icon={faUser} />
                 </Link>
                 </li>

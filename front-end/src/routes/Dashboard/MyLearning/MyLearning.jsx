@@ -1,49 +1,71 @@
+// Code of MyLearning Page where user can interact with the courses enrolled
+import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import LearningCardOverview from "../../../components/LearningCardOverview/LearningCardOverview";
+import baseClient from "../../../api/baseClient";
+import { UserContext } from "../../../context/UserContext";
 
 function MyLearning() {
+
+  const [coursesEnrolled, setCoursesEnrolled] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const { user } = useContext(UserContext);
+
+  // Try to load the courses the user is enrolled to
+  useEffect(() => {
+    const fetchEnrolledCourses = async () => {
+      try
+      {
+        const res = await baseClient.get(`/courses/user/${user.id}`);
+        setCoursesEnrolled(res.data);
+      }
+
+      catch (err)
+      {
+        setError(err.error);
+      }
+
+      finally
+      {
+        setLoading(false);
+      }
+    };
+
+    fetchEnrolledCourses();
+  }, []);
+
   return (
     <div className="p-6 bg-slate-900 text-white">
       <h1 className="text-3xl font-bold mb-6">My Learning</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         {/* Courses */}
-        <LearningCardOverview
-          imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323744/Apollo-Tech-School/Java-For-Beginners.webp"
-          imgAlt="Java For Beginners Course"
-          cardTitle="Java For Beginners"
-          cardDescription="Learn the basics of Java programming."
-          detailsLink="/course/1"
-          progress={45}
-        />
-        
-        <LearningCardOverview
-          imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323766/Apollo-Tech-School/Pandas-And-Matplotlib.jpg"
-          imgAlt="Pandas And Matplotlib Course"
-          cardTitle="Pandas And Matplotlib"
-          cardDescription="Learn data manipulation and visualization."
-          detailsLink="/course/2"
-          progress={60}
-        />
-        
-        {/* Course Packet */}
-        <LearningCardOverview
-          imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737326088/Apollo-Tech-School/Java-Android.png"
-          imgAlt="Java Mobile Development Packet"
-          cardTitle="Java Mobile Development Packet"
-          cardDescription="Learn Java for Android mobile applications."
-          detailsLink="/packet/1"
-          progress={30}
-        />
-        
-        {/* Learning Path */}
-        <LearningCardOverview
-          imgSource="https://res.cloudinary.com/dwtfvqcwv/image/upload/v1737323564/Apollo-Tech-School/Full-Stack-Developer.webp"
-          imgAlt="Full-Stack Web Development Path"
-          cardTitle="Full-Stack Web Development Path"
-          cardDescription="Become a professional full-stack developer."
-          detailsLink="/path/1"
-          progress={75}
-        />
+        {
+          (loading) ? <p>Loading...</p>
+          : ((error) ? <p>Error: {error} </p>: (
+
+            coursesEnrolled.length == 0 ? (
+              <div>
+                <h3 className="text-2xl font-bold mb-4">You are enrolled in no courses</h3>
+                <Link className="btn btn-success bg-green-500 rounded-full hover:bg-green-600 btn-lg" to="/">Browse Courses</Link>
+              </div>
+            ) : (
+            coursesEnrolled.map(coursesEnrolled => {
+              return (
+                <LearningCardOverview
+                  imgSource={coursesEnrolled.picUrl}
+                  imgAlt={coursesEnrolled.description}
+                  cardTitle={coursesEnrolled.title}
+                  detailsLink={`/course/${coursesEnrolled.id}`}
+                  key={coursesEnrolled.id}
+                />
+              )
+            })
+          )))
+        }
       </div>
     </div>
   );

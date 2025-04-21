@@ -9,7 +9,7 @@ export const UserContext = createContext();
 export const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
         const storedUser = sessionStorage.getItem("user");
-        return storedUser ? JSON.parse(storedUser) : {};
+        return storedUser !== null ? JSON.parse(storedUser) : {"user": null};
     });
 
     // Save user info in sessionStorage
