@@ -6,11 +6,11 @@ package com.apollotechschool.ApolloTechSchool.services;
  * */
 
 import com.apollotechschool.ApolloTechSchool.dtos.LoginDto;
+import com.apollotechschool.ApolloTechSchool.dtos.UpdateUserDto;
 import com.apollotechschool.ApolloTechSchool.dtos.UserDto;
+import com.apollotechschool.ApolloTechSchool.payloads.UserPayload;
 
 public interface UserService
 {
-    String registerUser(UserDto userDto);
-    String loginUser(LoginDto loginDto);
-    void logoutUser(String token);
+    UserPayload updateUser(UpdateUserDto updateUserDto);
 }

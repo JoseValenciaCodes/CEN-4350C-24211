@@ -24,17 +24,28 @@ public class CourseEnrolled
 
     /* Course Enrolled Relationships */
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false, unique = true)
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
     public CourseEnrolled() {}
 
-    public CourseEnrolled(Long id, User user) {
-        this.id = id;
+    public User getUser() {
+        return user;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

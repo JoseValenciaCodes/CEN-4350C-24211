@@ -1,12 +1,11 @@
 package com.apollotechschool.ApolloTechSchool.controllers;
 
+import com.apollotechschool.ApolloTechSchool.dtos.MembershipUserDto;
 import com.apollotechschool.ApolloTechSchool.payloads.MembershipPayload;
+import com.apollotechschool.ApolloTechSchool.payloads.MessagePayload;
 import com.apollotechschool.ApolloTechSchool.services.MembershipService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,5 +35,26 @@ public class MembershipController
     {
         MembershipPayload membershipPayload = membershipService.getMembershipById(id);
         return ResponseEntity.ok(membershipPayload);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<MembershipPayload> getMembershipOfUser(@PathVariable("userId") Long userId)
+    {
+        MembershipPayload membershipPayload = membershipService.getMembershipOfUser(userId);
+        return ResponseEntity.ok(membershipPayload);
+    }
+
+    @PostMapping
+    public ResponseEntity<MessagePayload> addUserToMembership(@RequestBody MembershipUserDto membershipUserDto)
+    {
+        MessagePayload messagePayload = membershipService.addUserToMembership(membershipUserDto.getMembershipId(), membershipUserDto.getUserId());
+        return ResponseEntity.ok(messagePayload);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<MessagePayload> deleteUserFromMembership(@RequestBody MembershipUserDto membershipUserDto)
+    {
+        MessagePayload messagePayload = membershipService.deleteUserFromMembership(membershipUserDto.getMembershipId(), membershipUserDto.getUserId());
+        return ResponseEntity.ok(messagePayload);
     }
 }

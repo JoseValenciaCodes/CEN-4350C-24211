@@ -6,6 +6,7 @@ package com.apollotechschool.ApolloTechSchool.services;
 * */
 
 import com.apollotechschool.ApolloTechSchool.payloads.MembershipPayload;
+import com.apollotechschool.ApolloTechSchool.payloads.MessagePayload;
 
 import java.util.List;
 
@@ -13,4 +14,7 @@ public interface MembershipService
 {
     List<MembershipPayload> getAllMemberships();
     MembershipPayload getMembershipById(Long id);
+    MembershipPayload getMembershipOfUser(Long userId);
+    MessagePayload addUserToMembership(Long membershipId, Long userId);
+    MessagePayload deleteUserFromMembership(Long membershipId, Long userId);
 }
